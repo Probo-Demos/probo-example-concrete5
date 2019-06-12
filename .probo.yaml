@@ -1,3 +1,5 @@
+image: proboci/ubuntu:18.04-php7.3
+
 steps:
   - name: Probo LAMPApp configuration for Concrete5..
     plugin: LAMPApp
