@@ -1,5 +1,5 @@
 steps:
-  - name: Probo LAMPApp configuration for Concrete5.
+  - name: Probo LAMPApp configuration for Concrete5..
     plugin: LAMPApp
     databaseName: concrete5demo
     databaseUser: root
@@ -19,3 +19,9 @@ steps:
       $SRC_DIR/concrete/bin/concrete5 c5:install --db-server=localhost --db-username=root --db-password=strongpassword --db-database=concrete5demo --site=Test --admin-email=jmoore@zivtech.com --admin-password=PASSWORD --starting-point=elemental_full
       chown -Rf www-data:www-data .
       chmod -Rf 775 .
+  - plugin: Script
+    name: Test versions.
+    script: |
+      php -V
+      mysql --version
+      varnishd -V
