@@ -1,0 +1,31 @@
+image: proboci/ubuntu-16.04-lamp:php-7.2
+steps:
+  - name: Download Concrete 5 latest release.
+    plugin: Script
+    script: |
+      composer create-project concrete5/composer /tmp/src --no-interaction
+      cp -Rf /tmp/src/* /src
+  - name: Probo LAMPApp configuration for Concrete5..
+    plugin: LAMPApp
+    databaseName: concrete5demo
+    databaseUser: root
+    mysqlCnfOptions:
+      key_buffer_size: 36M
+      max_allowed_packet: 36M
+    phpIniOptions:
+      upload_max_filesize: 25M
+      post_max_size: 25M
+      memory_limit: 256M
+  - name: Install Concrete 5 site.
+    plugin: Script
+    script: |
+      mkdir $SRC_DIR/application $SRC_DIR/application/config $SRC_DIR/packages $SRC_DIR/application/packages
+      chmod -R 775 .
+      vendor/bin/concrete5 c5:install --allow-as-root --db-server=localhost --db-username=root --db-password=strongpassword --db-database=concrete5demo --site=Test --admin-email=jmoore@zivtech.com --admin-password=PASSWORD --starting-point=elemental_full
+      ln -s /src/public /var/www/html
+      chown -R www-data:www-data /src/public
+      chmod -Rf 775 /src/public
+      chmod -R 775 /src/public/application/config/
+      chmod -R 775 /src/public/pplication/files/
+      chmod -R 775 /src/public/application/cache/
+      chmod -R 775 /src/public/packages/
