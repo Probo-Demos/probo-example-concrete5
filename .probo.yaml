@@ -1,11 +1,11 @@
 image: proboci/ubuntu-16.04-lamp:php-7.2
 steps:
-  - name: Download Concrete 5 latest release.
+  - name: Download Concrete5 latest release.
     plugin: Script
     script: |
       composer create-project concrete5/composer /tmp/src --no-interaction
       cp -Rf /tmp/src/* /src
-  - name: Probo LAMPApp configuration for Concrete5..
+  - name: Probo LAMPApp configuration for Concrete5.
     plugin: LAMPApp
     databaseName: concrete5demo
     databaseUser: root
@@ -16,7 +16,7 @@ steps:
       upload_max_filesize: 25M
       post_max_size: 25M
       memory_limit: 256M
-  - name: Install Concrete 5 site.
+  - name: Install Concrete5 site.
     plugin: Script
     script: |
       mkdir $SRC_DIR/application $SRC_DIR/application/config $SRC_DIR/packages $SRC_DIR/application/packages
